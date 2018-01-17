@@ -2,27 +2,24 @@
 
 import argparse, sys
 
-from common import *
+from base.converter.common import *
 
-def parse_args():
-    
-    if len(sys.argv) == 1:
-        sys.argv.append('-h')
-
+def parse_args(label):
+    base_dir = r'D:\document\program\ml\machine-learning-databases\kaggle\Click-Through Rate Prediction\\'
     parser = argparse.ArgumentParser()
     parser.add_argument('-s', dest='nr_thread', default=12, type=int)
-    parser.add_argument('cvt_path')
-    parser.add_argument('tr_src_path')
-    parser.add_argument('va_src_path')
-    parser.add_argument('tr_dst_path')
-    parser.add_argument('va_dst_path')
+    parser.add_argument('--cvt_path', default=base_dir+'converter/2.py')
+    parser.add_argument('--tr_src_path', default=base_dir+'tr.r0.{label}.new.csv'.format(label=label))
+    parser.add_argument('--va_src_path', default=base_dir+'va.r0.{label}.new.csv'.format(label=label))
+    parser.add_argument('--tr_dst_path', default=base_dir+'tr.r0.{label}.sp'.format(label=label))
+    parser.add_argument('--va_dst_path', default=base_dir+'va.r0.{label}.sp'.format(label=label))
     args = vars(parser.parse_args())
 
     return args
 
 def main():
-    
-    args = parse_args()
+    label = 'app'
+    args = parse_args(label)
 
     nr_thread = args['nr_thread']
     
