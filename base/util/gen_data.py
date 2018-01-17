@@ -2,18 +2,19 @@
 
 import argparse, csv, sys, pickle, collections, time
 
-from common import *
+from base.converter.common import *
 
-if len(sys.argv) == 1:
-    sys.argv.append('-h')
+base_dir = r'D:\document\program\ml\machine-learning-databases\kaggle\Click-Through Rate Prediction\\'
+train = base_dir + 'train.csv'
+test = base_dir + 'va.r0.csv'
 
 parser = argparse.ArgumentParser()
-parser.add_argument('tr_src_path', type=str)
-parser.add_argument('va_src_path', type=str)
-parser.add_argument('tr_app_dst_path', type=str)
-parser.add_argument('va_app_dst_path', type=str)
-parser.add_argument('tr_site_dst_path', type=str)
-parser.add_argument('va_site_dst_path', type=str)
+parser.add_argument('--tr_src_path', type=str, default=train)
+parser.add_argument('--va_src_path', type=str, default=test)
+parser.add_argument('--tr_app_dst_path', type=str, default=base_dir + 'tr.r0.app.new.csv')
+parser.add_argument('--va_app_dst_path', type=str, default=base_dir + 'va.r0.app.new.csv')
+parser.add_argument('--tr_site_dst_path', type=str, default=base_dir + 'tr.r0.site.new.csv')
+parser.add_argument('--va_site_dst_path', type=str, default=base_dir + 'va.r0.site.new.csv')
 args = vars(parser.parse_args())
 
 FIELDS = ['id','click','hour','banner_pos','device_id','device_ip','device_model','device_conn_type','C14','C17','C20','C21']
@@ -64,6 +65,10 @@ def gen_data(src_path, dst_app_path, dst_site_path, is_train):
         if has_id_info(row):
 
             if history[user]['prev_hour'] != row['hour']:
+                print(history[user]['prev_hour'])
+                print(row['hour'])
+                print(history[user]['buffer'])
+                print(history[user]['history'])
                 history[user]['history'] = (history[user]['history'] + history[user]['buffer'])[-4:]
                 history[user]['buffer'] = ''
                 history[user]['prev_hour'] = row['hour']
