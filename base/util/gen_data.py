@@ -65,10 +65,6 @@ def gen_data(src_path, dst_app_path, dst_site_path, is_train):
         if has_id_info(row):
 
             if history[user]['prev_hour'] != row['hour']:
-                print(history[user]['prev_hour'])
-                print(row['hour'])
-                print(history[user]['buffer'])
-                print(history[user]['history'])
                 history[user]['history'] = (history[user]['history'] + history[user]['buffer'])[-4:]
                 history[user]['buffer'] = ''
                 history[user]['prev_hour'] = row['hour']
