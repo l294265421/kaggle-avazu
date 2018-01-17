@@ -2,7 +2,7 @@
 
 import argparse, csv, sys, pickle, collections
 
-from common import *
+from base.converter.common import *
 
 if len(sys.argv) == 1:
     sys.argv.append('-h')
